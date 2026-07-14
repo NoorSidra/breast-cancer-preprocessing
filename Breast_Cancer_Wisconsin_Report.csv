@@ -1,0 +1,30 @@
+"Predicting Breast Cancer Diagnosis Using Machine Learning"
+"Milestone 1 Report: Dataset Selection & Data Preprocessing"
+""
+"Problem Statement"
+"Breast cancer diagnosis relies on manual interpretation of cell nuclei features from fine needle aspirate (FNA) images, which is time-consuming and subject to inter-observer variability. This project aims to build a machine learning classification model that predicts whether a breast mass is malignant or benign based on quantitative cell nucleus measurements, supporting faster and more consistent diagnostic decisions."
+"Dataset Source & Justification"
+"The Breast Cancer Wisconsin (Diagnostic) dataset was used, sourced from the UCI Machine Learning Repository and Kaggle, and also available directly through scikit-learn (sklearn.datasets.load_breast_cancer). It was selected because it is a well-established benchmark for binary medical classification tasks, contains clean numeric features suitable for a range of algorithms, and directly matches the project's proposed goal of diagnostic classification."
+"Dataset Overview"
+""
+"Property
+Value
+Rows / Columns
+569 rows x 30 features + 1 target
+Feature type
+Continuous numeric (radius, texture, perimeter, area, smoothness, etc.)
+Target variable
+Diagnosis: Malignant (0) / Benign (1)
+Missing values
+0
+Duplicate records
+0
+Class distribution
+Benign ~62.7% (357), Malignant ~37.3% (212) - moderate imbalance"
+"Preprocessing Steps Performed"
+"1) Missing values: none found; verified programmatically, no imputation required. 2) Duplicates: checked with df.duplicated(); none present. 3) Outliers: detected per-feature using the IQR method and capped (winsorized) at the"
+"1.5xIQR bounds rather than dropped, preserving sample size. 4) Encoding: target confirmed as numeric (0/1) via LabelEncoder; all other features were already continuous numeric, so no one-hot encoding was needed. 5) Feature scaling: StandardScaler (z-score standardization) applied to all 30 features, since they vary widely in scale/units and several candidate classifiers (Logistic Regression, SVM, KNN) are distance/gradient-sensitive. 6) Class imbalance: distribution is ~63/37, a moderate but non-trivial imbalance; SMOTE-Tomek was applied on the training split only (after train/test split, to avoid leakage) to oversample the minority (malignant) class with synthetic samples and remove ambiguous borderline (Tomek link) pairs, yielding a balanced 50/50 training set."
+"Libraries & Tools Used"
+"Python, Pandas, NumPy, Scikit-learn, Imbalanced-learn (SMOTE-Tomek), Matplotlib/Seaborn for visualization, Google Colab / Jupyter Notebook, and Git & GitHub for version control."
+"Challenges Encountered"
+"The dataset was already relatively clean (no missing values or duplicates), so the main challenge was deciding an outlier-treatment strategy that would not shrink the already modest sample size; capping via IQR was chosen over row deletion. Additionally, since the class imbalance was moderate rather than severe, care was taken to apply SMOTE-Tomek only on the training set to avoid inflating test performance through data leakage."
